@@ -27,7 +27,7 @@ form = """
     </head>
     <body>
         <form method='post'>
-            <input type='text' label='Rotate by:' name='rot' value='0'>
+            <label for='rot'>Rotate By: </label><input type='text' label="Rotate by:" name='rot' value='0' id='rot' />
             <textarea name='text'>{0}</textarea>
             <input type='submit' />
         </form>
@@ -43,7 +43,10 @@ def index():
 @app.route("/", methods=['POST'])
 def encrypt():
     rot = request.form['rot']
-    rot = int(rot)
+    try:
+        rot = int(rot)
+    except:
+        return form.format('Error: Must be an integer')
     text = request.form['text']
     return form.format(rotate_string(text, rot))
 
